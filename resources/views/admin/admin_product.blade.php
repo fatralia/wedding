@@ -98,7 +98,7 @@
                 </div>
             </div>
         @endif
-        <div class="text-center update-text">PESANAN</div>
+        <div class="text-center update-text">PRODUCT</div>
         <!-- Table Content -->
     </div>
 
@@ -107,10 +107,10 @@
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h2>List <b>Pesanan</b></h2>
+                        <h2>List <b>Product</b></h2>
                     </div>
                     <div class="col-sm-6">
-                        {{-- <a href='#addEmployeeModal' class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Tambah Pesanan</span></a> --}}
+                        <a href='#addEmployeeModal' class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Tambah Pesanan</span></a>
                     </div>
                 </div>
             </div>
@@ -119,11 +119,8 @@
                     <tr>
                         <th>No</th>
                         <th>Nama</th>
-                        <th>Alamat</th>
-                        <th>No.Hp</th>
-                        <th>Tanggal</th>
-                        <th>Produk</th>
-                        <th>Bukti</th>
+                        <th>Detail</th>
+                        <th>Harga</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -133,13 +130,10 @@
                     <tr>
                         <td>{{ $i++ }}</td>
                         <td>{{ $item->nama }}</td>
-                        <td>{{ $item->alamat }}</td>
-                        <td>{{ $item->no_hp }}</td>
-                        <td>{{ $item->tanggal }}</td>
-                        <td>{{ $item->produk }}</td>
-                        <td><button class="btn btn-primary">Lihat Bukti</button></td>
+                        <td>{{ $item->detail }}</td>
+                        <td>{{ $item->harga }}</td>
                         <td>
-                            {{-- <a href="#editEmployeeModal{{ $item->id }}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a> --}}
+                            <a href="#editEmployeeModal{{ $item->id }}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                             <a href="#deleteEmployeeModal{{ $item->id }}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                         </td>
                     </tr>

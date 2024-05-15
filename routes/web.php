@@ -23,6 +23,8 @@ use App\Http\Controllers\admin_prewedController;
 use App\Http\Controllers\aboutController;
 use App\Http\Controllers\commentController;
 use App\Http\Controllers\contactController;
+use App\Http\Controllers\admin_userController;
+
 
 
 
@@ -69,4 +71,10 @@ Route::get('/admin_prewed', [admin_prewedController::class, 'index']);
 Route::get('/about', [aboutController::class, 'index']);
 Route::get('/comment', [commentController::class, 'index']);
 Route::get('/contact', [contactController::class, 'index']);
+Route::get('/contact', [contactController::class, 'index']);
+Route::get('/admin_user', [admin_userController::class, 'index']);
+Route::get('/admin_product', [admin_productController::class, 'index']);
+Route::get('/admin_tema', [admin_temaController::class, 'index']);
+
+
 
