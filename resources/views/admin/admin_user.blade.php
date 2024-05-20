@@ -71,23 +71,22 @@
 
 </head>
 <body>
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#"><img src="logo.png" alt="Logo" class="navbar-logo"></a>
+    <nav class="navbar navbar-inverse" style="z-index: 1">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#"><img src="logo.png" alt="Logo" class="navbar-logo"></a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="home-nav" style="margin-right: 10rem"><a href="/auth/logout" class="navbar_home">Logout</a></li>
+            </ul>
         </div>
-        <ul class="nav navbar-nav navbar-right">
-            <li class="home-nav"><a href="#" class="navbar_home">Home</a></li>
-        </ul>
+    </nav>
+    
+    <div class="sidebar">
+        <a href="/admin/user" style="margin-top: 4rem">User</a>
+        <a href="/admin/pesanan">Pesanan</a>
+        <a href="/admin/product">Product</a>
     </div>
-</nav>
-
-<div class="sidebar">
-    <a href="/admin_user">User</a>
-    <a href="/admin_web">Pesanan</a>
-    <a href="/admin_product">Product</a>
-    <a href="/admin_tema">Tema</a>
-</div>
 
 <div class="content">
     <div class="container">
@@ -98,7 +97,7 @@
                 </div>
             </div>
         @endif
-        <div class="text-center update-text">User</div>
+        <div class="update-text">User</div>
         <!-- Table Content -->
     </div>
 
@@ -130,12 +129,12 @@
                     @foreach ($data as $item)
                     <tr>
                         <td>{{ $i++ }}</td>
-                        <td>{{ $item->nama }}</td>
+                        <td>{{ $item->name }}</td>
                         <td>{{ $item->alamat }}</td>
                         <td>{{ $item->no_hp }}</td>
                         <td>{{ $item->email }}</td>
                         <td>
-                            <a href="#editEmployeeModal{{ $item->id }}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                            {{-- <a href="#editEmployeeModal{{ $item->id }}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a> --}}
                             <a href="#deleteEmployeeModal{{ $item->id }}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                         </td>
                     </tr>
@@ -143,7 +142,7 @@
                     <div id="deleteEmployeeModal{{ $item->id }}" class="modal fade">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <form action="admin_web/delete/{{ $item->id }}" method="GET">
+                                <form action="user/{{ $item->id }}" method="GET">
                                     <div class="modal-header">
                                         <h4 class="modal-title">Delete Employee</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>

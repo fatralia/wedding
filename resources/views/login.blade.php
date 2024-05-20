@@ -13,7 +13,7 @@
 <link href="{{ asset('css/login.css') }}" rel="stylesheet" type="text/css" >
 <style>
     body {
-        background-image: url('background.jpg');
+        background-image: url({{asset('background.jpg')}});
         background-size: cover;
         background-repeat: no-repeat;
         background-attachment: fixed;
@@ -34,23 +34,34 @@
 </head>
 <body>
 <div class="form-bg">
+    <div class="content">
+        <div class="container">
+            @if (Session::has('gagal'))
+                <div class="pt-3">
+                    <div class="alert alert-danger alert-block" style="z-index: 1">
+                        {{ Session::get('gagal') }}
+                    </div>
+                </div>
+            @endif
+        </div>
     <div class="container">
         <div class="row">
             <div class="col-md-offset-4 col-md-4 col-sm-offset-3 col-sm-6">
                 <div class="form-container">
-                    <form class="form-horizontal">
+                    <form class="form-horizontal" action="/auth/login" method="post">
+                        @csrf
                         <h3 class="title">Login</h3>
                         <div class="form-group">
                             <span class="input-icon"><i class="fa fa-user"></i></span>
-                            <input class="form-control" type="email" placeholder="Email">
+                            <input class="form-control" type="email" name="email" placeholder="Email" required>
                         </div>
                         <div class="form-group">
                             <span class="input-icon"><i class="fa fa-lock"></i></span>
-                            <input class="form-control" type="password" placeholder="Password">
+                            <input class="form-control" type="password" name="password" placeholder="Password" required>
                         </div>
-                        <span class="forgot-pass"><a href="/sign">Buat Akun</a></span>
-                        <a href="/beranda" class="btn signin" type="button">Login
-                        </a>
+                        <span class="forgot-pass"><a href="/auth/sign">Buat Akun</a></span>
+                        <button class="btn signin" type="submit">Login
+                        </button>
                     </form>
                 </div>
             </div>

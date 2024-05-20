@@ -71,22 +71,21 @@
 
 </head>
 <body>
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse" style="z-index: 1">
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="#"><img src="logo.png" alt="Logo" class="navbar-logo"></a>
         </div>
         <ul class="nav navbar-nav navbar-right">
-            <li class="home-nav"><a href="#" class="navbar_home">Home</a></li>
+            <li class="home-nav" style="margin-right: 10rem"><a href="/auth/logout" class="navbar_home">Logout</a></li>
         </ul>
     </div>
 </nav>
 
 <div class="sidebar">
-    <a href="/admin_user">User</a>
-    <a href="/admin_web">Pesanan</a>
-    <a href="/admin_product">Product</a>
-    <a href="/admin_tema">Tema</a>
+    <a href="/admin/user" style="margin-top: 4rem">User</a>
+    <a href="/admin/pesanan">Pesanan</a>
+    <a href="/admin/product">Product</a>
 </div>
 
 <div class="content">
@@ -98,7 +97,7 @@
                 </div>
             </div>
         @endif
-        <div class="text-center update-text">PRODUCT</div>
+        <div class="update-text">PRODUCT</div>
         <!-- Table Content -->
     </div>
 
@@ -110,7 +109,7 @@
                         <h2>List <b>Product</b></h2>
                     </div>
                     <div class="col-sm-6">
-                        <a href='#addEmployeeModal' class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Tambah Pesanan</span></a>
+                        <a href='#addEmployeeModal' class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Tambah Produk</span></a>
                     </div>
                 </div>
             </div>
@@ -119,7 +118,7 @@
                     <tr>
                         <th>No</th>
                         <th>Nama</th>
-                        <th>Detail</th>
+                        <th>Category</th>
                         <th>Harga</th>
                         <th>Actions</th>
                     </tr>
@@ -129,9 +128,9 @@
                     @foreach ($data as $item)
                     <tr>
                         <td>{{ $i++ }}</td>
-                        <td>{{ $item->nama }}</td>
-                        <td>{{ $item->detail }}</td>
-                        <td>{{ $item->harga }}</td>
+                        <td>{{ $item->name }}</td>
+                        <td>{{ $item->category == '1' ? 'Pre Wedding' : ($item->category == '2' ? 'Wedding Decoration' : 'Wedding Package') }}</td>
+                        <td>{{ $item->min }} - {{ $item->max }}</td>
                         <td>
                             <a href="#editEmployeeModal{{ $item->id }}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                             <a href="#deleteEmployeeModal{{ $item->id }}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
@@ -141,7 +140,7 @@
                     <div id="deleteEmployeeModal{{ $item->id }}" class="modal fade">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <form action="admin_web/delete/{{ $item->id }}" method="GET">
+                                <form action="/admin/product/{{ $item->id }}" method="GET">
                                     <div class="modal-header">
                                         <h4 class="modal-title">Delete Employee</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -162,9 +161,9 @@
                     <div id="editEmployeeModal{{ $item->id }}" class="modal fade">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <form action='admin_web/edit/{{ $item->id }}' method="POST">
+                                <form action='/admin/product/{{ $item->id }}' method="post" enctype="multipart/form-data">
                                     @csrf
-                                    @method('PUT')
+                                    @method('put')
                                     <div class="modal-header">
                                         <h4 class="modal-title">Edit Employee</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -172,36 +171,43 @@
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label>Nama</label>
-                                            <input type="text" class="form-control" name="nama" id="nama" required>
+                                            <input type="text" class="form-control" value="{{$item->name}}" name="name" required>
                                         </div>
                                         <div class="form-group">
-                                            <label>Alamat</label>
-                                            <textarea class="form-control" name="alamat" id="alamat" required></textarea>
+                                            <label>Kategori</label>
+                                            <select class="form-control" name="category" aria-label="Default select example">
+                                                <option value="" disabled>Pilih Kategori</option>
+                                                <option value="1" {{$item->category == '1' ? 'selected' : ''}}>Pre Wedding</option>
+                                                <option value="2" {{$item->category == '2' ? 'selected' : ''}}>Wedding Decoration</option>
+                                                <option value="3" {{$item->category == '3' ? 'selected' : ''}}>Wedding Package</option>
+                                              </select>
                                         </div>
                                         <div class="form-group">
-                                            <label>No Handphone</label>
-                                            <input type="text" class="form-control" name="no_hp" id="no_hp" required>
+                                            <label>Detail</label>
+                                            <textarea class="form-control" name="detail" required>{{$item->detail}}</textarea>
                                         </div>
                                         <div class="form-group">
-                                            <label>Pilih Tanggal</label>
-                                            <input type="text" class="form-control datepicker" name="tanggal" id="tanggal" required>
+                                            <label>Harga Minimal</label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Rp.</span>
+                                                <input type="text" onkeypress="return isNumber(event)" value="{{$item->min}}" class="form-control" name="min" required>
+                                            </div>
+                                        </div>    
                                         <div class="form-group">
-                                            <label>Produk</label>
-                                            <input type="text" class="form-control" name="produk" id="produk" required>
-                                        </div>
-                                            <script>
-                                                $(document).ready(function() {
-                                                    $('.datepicker').datepicker({
-                                                        format: 'yyyy/mm/dd',
-                                                        autoclose: true
-                                                    });
-                                                });
-                                            </script>
+                                            <label>Harga Maksimal</label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Rp.</span>
+                                                <input type="text" onkeypress="return isNumber(event)" value="{{$item->max}}" class="form-control" name="max" required>
+                                            </div>
+                                        </div>    
+                                        <div class="form-group">
+                                            <label>Gambar</label>
+                                            <input type="file" class="form-control" accept="image/*" name="picture">
                                         </div>
                                     </div>
                                     <div class="modal-footer">
                                         <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                        <input type="submit" class="btn btn-info" value="Save">
+                                        <input type="submit" class="btn btn-primary" value="Submit">
                                     </div>
                                 </form>
                             </div>
@@ -216,35 +222,47 @@
     <div id="addEmployeeModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action='{{ route('admin.create') }}' method="POST">
+                <form action='' method="POST" enctype="multipart/form-data">
+                    @csrf
                     <div class="modal-header">
-                        <h4 class="modal-title">Add Employee</h4>
+                        <h4 class="modal-title">Add Product</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
                             <label>Nama</label>
-                            <input type="text" class="form-control" name="nama" required>
+                            <input type="text" class="form-control" name="name" required>
                         </div>
                         <div class="form-group">
-                            <label>Pesanan</label>
-                            <input type="text" class="form-control" name="pesanan" required>
+                            <label>Kategori</label>
+                            <select class="form-control" name="category" aria-label="Default select example">
+                                <option value="" selected disabled>Pilih Kategori</option>
+                                <option value="1">Pre Wedding</option>
+                                <option value="2">Wedding Decoration</option>
+                                <option value="3">Wedding Package</option>
+                              </select>
                         </div>
                         <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" class="form-control" name="email" required>
+                            <label>Detail</label>
+                            <textarea class="form-control" name="detail" required></textarea>
                         </div>
                         <div class="form-group">
-                            <label>Alamat</label>
-                            <textarea class="form-control" name="alamat" required></textarea>
+                            <label>Harga Minimal</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">Rp.</span>
+                                <input type="text" onkeypress="return isNumber(event)" class="form-control" name="min" required>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label>No Handphone</label>
-                            <input type="text" class="form-control" name="no_hp" required>
+                            <label>Harga Maksimal</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">Rp.</span>
+                                <input type="text" onkeypress="return isNumber(event)" class="form-control" name="max" required>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label>Pilih Tanggal</label>
-                            <input type="text" class="form-control datepicker" name="tanggal" required>
+                            <label>Gambar</label>
+                            <input type="file" class="form-control" accept="image/*" name="picture" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -256,15 +274,12 @@
         </div>
     </div>
 </div>
-
-<script>
-    $(document).ready(function() {
-        $('.datepicker').datepicker({
-            format: 'yyyy/mm/dd',
-            autoclose: true
-        });
-    });
-</script>
-
 </body>
+<script>
+    function isNumber(evt) {
+            var charCode = evt.which ? evt.which : event.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) return false;
+            return true;
+        }
+</script>
 </html>

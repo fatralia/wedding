@@ -10,11 +10,11 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 		<!-- Bootstrap CSS -->
-		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
-		<link href="css/tiny-slider.css" rel="stylesheet">
-		<link href="css/profile.css" rel="stylesheet">
+		<link href="{{asset('css/tiny-slider.css')}}" rel="stylesheet">
+		<link href="{{asset('css/profile.css')}}" rel="stylesheet">
 		<style>
 			body {
 				font-family: 'Poppins', sans-serif;
@@ -45,16 +45,27 @@
 
 					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
                         <li>
-                            <!-- Tombol untuk menampilkan opsi -->
-                            <a href="#" class="btn btn-primary nav-link" type="button" id="user-dropdown" style="padding: 5px; background-color: rgb(97, 150, 166); display: inline-block; width: 50px; text-align: center; border-color:rgb(97, 150, 166)">
-                                <img src="images/user.svg" alt="User Icon" style="max-width: 100%; height: auto;">
-                            </a>
+							@if(session()->has('email'))
+							<a href="#" class="btn btn-primary nav-link" type="button" id="user-dropdown" style="padding: 5px; background-color: rgb(97, 150, 166); display: inline-block; text-align: center; border-color:rgb(97, 150, 166)">
+                                <img src="{{asset('images/user.svg')}}" alt="User Icon" style="max-width: 100%; height: auto;">
+								{{session('email')}}
+							</a>
                             <!-- Opsi "Profile" dan "Logout" -->
                             <div id="dropdown-options" style="display: none;">
                                 <a href="/profile" class="dropdown-option">Profile</a>
-                                <a href="/" class="dropdown-option">Logout</a>
+                                <a href="/auth/logout" class="dropdown-option">Logout</a>
                             </div>
-                        </li>
+							@else
+							<a href="#" class="btn btn-primary nav-link" type="button" id="user-dropdown" style="padding: 5px; background-color: rgb(97, 150, 166); display: inline-block; text-align: center; border-color:rgb(97, 150, 166)">
+                                <img src="{{asset('images/user.svg')}}" alt="User Icon" style="max-width: 100%; height: auto;">
+								Login
+							</a>
+                            <!-- Opsi "Profile" dan "Logout" -->
+                            <div id="dropdown-options" style="display: none;">
+                                <a href="/auth/login" class="dropdown-option">Login</a>>
+                            </div>
+							@endif
+						</li>
                     </ul>
                     
                     <script>
@@ -94,39 +105,34 @@
 		</div>
 		
 		<div class="container">
-            <div class="profile" style="margin-top: 60px;">
+            <div class="profile">
                 <div class="profile-left">
                     <div class="profile-image">
-                        <img id="user-avatar" src="aku.jpg" alt="User Avatar" class="rounded-circle">
+                        <img id="user-avatar" src="{{asset('uploads/users/'.$data['picture'])}}" alt="User Avatar" class="rounded-circle">
                     </div>
                     <div class="email">
-                        <p>fatraayu17@gmail.com</p>
-                        <div class="button-container">
-                            <input type="file" id="upload-avatar" style="display:none;">
-                            <button id="upload-avatar-btn" class="btn-upload">Upload Gambar</button>
-                        </div>
+                        <p>{{ session('email') }}</p>
                     </div>
                 </div>
                 <div class="profile-right">
                     <div class="form-group" style="margin-top: 15px;">
                         <label for="name" style="width: 150px;">Nama:</label>
-                        <input type="text" id="name" name="name" value="Fatralia Della" style="width: 600px;">
+                        <input type="text" id="name" name="name" value="{{$data['name']}}" style="width: 600px;" disabled>
                     </div>
                     <div class="form-group">
                         <label for="email" style="width: 150px;">Email:</label>
-                        <input type="email" id="email" name="email" value="fatraayu17@gmail.com" style="width: 600px;">
+                        <input type="email" id="email" name="email" value="{{$data['email']}}" style="width: 600px;" disabled>
                     </div>
                     <div class="form-group">
                         <label for="phone" style="width: 150px;">Nomor HP:</label>
-                        <input type="text" id="phone" name="phone" value="08123456789" style="width: 600px;">
+                        <input type="text" id="phone" name="phone" value="{{$data['no_hp']}}" style="width: 600px;" disabled>
                     </div>
                     <div class="form-group">
                         <label for="address" style="width: 150px;">Alamat:</label>
-                        <input type="text" id="address" name="address" value="Jalan Bunga No. 123" style="width: 600px;">
+                        <input type="text" id="address" name="address" value="{{$data['alamat']}}" style="width: 600px;" disabled>
                     </div>
                     <div class="buttons">
-                        <a href = "/edit_profile"><button id="edit-profile-btn">Edit</button></a>
-                        <button id="save-profile-btn">Save</button>
+                        <a href = "/profile/{{session('id')}}"><button id="edit-profile-btn">Edit</button></a>
                     </div>
             </div>
         </div>
@@ -203,8 +209,8 @@
 		</footer>
 		<!-- End Footer Section -->	
 
-		<script src="js/bootstrap.bundle.min.js"></script>
-		<script src="js/tiny-slider.js"></script>
-		<script src="js/custom.js"></script>
+		<script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
+		<script src="{{asset('js/tiny-slider.js')}}"></script>
+		<script src="{{asset('js/custom.js')}}"></script>
 	</body>
 </html>

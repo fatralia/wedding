@@ -71,23 +71,22 @@
 
 </head>
 <body>
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#"><img src="logo.png" alt="Logo" class="navbar-logo"></a>
+    <nav class="navbar navbar-inverse" style="z-index: 1">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#"><img src="logo.png" alt="Logo" class="navbar-logo"></a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="home-nav" style="margin-right: 10rem"><a href="/auth/logout" class="navbar_home">Logout</a></li>
+            </ul>
         </div>
-        <ul class="nav navbar-nav navbar-right">
-            <li class="home-nav"><a href="#" class="navbar_home">Home</a></li>
-        </ul>
+    </nav>
+    
+    <div class="sidebar">
+        <a href="/admin/user" style="margin-top: 4rem">User</a>
+        <a href="/admin/pesanan">Pesanan</a>
+        <a href="/admin/product">Product</a>
     </div>
-</nav>
-
-<div class="sidebar">
-    <a href="/admin_user">User</a>
-    <a href="/admin_web">Pesanan</a>
-    <a href="/admin_product">Product</a>
-    <a href="/admin_tema">Tema</a>
-</div>
 
 <div class="content">
     <div class="container">
@@ -98,7 +97,7 @@
                 </div>
             </div>
         @endif
-        <div class="text-center update-text">PESANAN</div>
+        <div class="update-text">PESANAN</div>
         <!-- Table Content -->
     </div>
 

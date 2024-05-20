@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<!-- Bootstrap CSS -->
-		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
-		<link href="css/tiny-slider.css" rel="stylesheet">
-		<link href="css/booking.css" rel="stylesheet">
+		<link href="{{asset('css/tiny-slider.css')}}" rel="stylesheet">
+		<link href="{{asset('css/booking.css')}}" rel="stylesheet">
 		<title>Moon Wedding</title>
 		<style>
 			body {
@@ -24,7 +24,7 @@
 		<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Wedding navigation bar">
 
 			<div class="container">
-				<a class="navbar-brand" href="index.html"><img src="logo.png" alt="Logo Wedding"></a>
+				<a class="navbar-brand" href="/beranda"><img src="{{asset('logo.png')}}" alt="Logo Wedding"></a>
 
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsWedding" aria-controls="navbarsWedding" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
@@ -42,16 +42,27 @@
 
 					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
                         <li>
-                            <!-- Tombol untuk menampilkan opsi -->
-                            <a href="#" class="btn btn-primary nav-link" type="button" id="user-dropdown" style="padding: 5px; background-color: rgb(97, 150, 166); display: inline-block; width: 50px; text-align: center; border-color:rgb(97, 150, 166)">
-                                <img src="images/user.svg" alt="User Icon" style="max-width: 100%; height: auto;">
-                            </a>
+							@if(session()->has('email'))
+							<a href="#" class="btn btn-primary nav-link" type="button" id="user-dropdown" style="padding: 5px; background-color: rgb(97, 150, 166); display: inline-block; text-align: center; border-color:rgb(97, 150, 166)">
+                                <img src="{{asset('images/user.svg')}}" alt="User Icon" style="max-width: 100%; height: auto;">
+								{{session('email')}}
+							</a>
                             <!-- Opsi "Profile" dan "Logout" -->
                             <div id="dropdown-options" style="display: none;">
                                 <a href="/profile" class="dropdown-option">Profile</a>
-                                <a href="/" class="dropdown-option">Logout</a>
+                                <a href="/auth/logout" class="dropdown-option">Logout</a>
                             </div>
-                        </li>
+							@else
+							<a href="#" class="btn btn-primary nav-link" type="button" id="user-dropdown" style="padding: 5px; background-color: rgb(97, 150, 166); display: inline-block; text-align: center; border-color:rgb(97, 150, 166)">
+                                <img src="{{asset('images/user.svg')}}" alt="User Icon" style="max-width: 100%; height: auto;">
+								Login
+							</a>
+                            <!-- Opsi "Profile" dan "Logout" -->
+                            <div id="dropdown-options" style="display: none;">
+                                <a href="/auth/login" class="dropdown-option">Login</a>>
+                            </div>
+							@endif
+						</li>
                     </ul>
                     
                     <script>
@@ -83,47 +94,35 @@
         
         {{-- start booking --}}
 <div class="container">
-    <h2>Booking Prewedding Photo</h2>
-    <form action="#">
+    <h2>Booking {{$data['category'] == '1' ? 'Prewedding Photo' : ($data['category'] == '2' ? 'Wedding Decoration' : 'Wedding Package')}}</h2>
+    <form action="/booking/{{$data['id']}}" method="post">
+        @csrf
         <div class="form-group">
             <label for="name">Nama:</label>
-            <input type="text" id="name" name="name">
+            <input type="text" value="{{$user['name']}}" id="name" name="name" required>
+            <input type="text" style="display: none;" value="{{$data['id']}}" id="name" name="name" required>
         </div>
         <div class="form-group">
             <label for="order">Pesanan:</label>
-            <select id="order" name="order">
-                <option value="">Pilih Tema</option>
-                <option value="Traditional">Traditional</option>
-                <option value="Vintage Romance">Vintage Romance</option>
-                <option value="Nature Adventure">Nature Adventure</option>
-                <option value="Urban Chic">Urban Chic</option>
-                <option value="Rustic Farmhouse">Rustic Farmhouse</option>
-                <option value="Fairytale Romance">Fairytale Romance</option>
-                <option value="Bohemian Dream">Bohemian Dream</option>
-                <option value="Glamorous Elegance">Glamorous Elegance</option>
-                <option value="Travel Love">Travel Love</option>
-                <option value="Artistic Expression">Artistic Expression</option>
-                <option value="Seasonal Delight">Seasonal Delight</option>
-                <option value="Futuristic Fantasy">Futuristic Fantasy</option>
-            </select>
+            <input type="text" value="{{$data['name']}}" id="name" name="pesanan" disabled required>
         </div>
         <div class="form-group">
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email">
+            <input type="email" id="email" value="{{$user['email']}}" name="email" required>
         </div>
         <div class="form-group">
             <label for="address">Alamat:</label>
-            <textarea id="address" name="address"></textarea>
+            <textarea id="address" name="address" required>{{$user['alamat']}}</textarea>
         </div>
         <div class="form-group">
             <label for="phone">No. Handphone:</label>
-            <input type="tel" id="phone" name="phone">
+            <input type="tel" id="phone" value="{{$user['no_hp']}}" name="phone" required>
         </div>
         <div class="form-group">
             <label for="date">Pilih Tanggal:</label>
             <input type="text" id="datepicker" name="date">
         </div>
-        <a href="/confirm" style="text-decoration: none;"><button type="button">Submit</button></a>
+        <button type="submit">Submit</button>
     </form>
 </div>
 
@@ -131,10 +130,10 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
     $(function() {
-        $("#datepicker").datepicker({
-            dateFormat: 'dd/mm/yy',
-            changeMonth: true,
-            changeYear: true
+        $("#datepicker").datepicker({ dateFormat: "yy-mm-dd" });
+        $("#datepicker").on("change",function(){
+            var selected = $(this).val();
+            document.getElementById('datepicker').value = selected
         });
     });
 </script>
@@ -154,7 +153,7 @@
 
 				<div class="row g-5 mb-5">
 					<div class="col-lg-4">
-						<a class="navbar-brand" href="index.html"><img src="logo.png" alt="Logo Wedding" style="height: auto; width: auto; max-height: 100px; max-width: 200px;"></a>
+						<a class="navbar-brand" href="/beranda"><img src="{{asset('logo.png')}}" alt="Logo Wedding" style="height: auto; width: auto; max-height: 100px; max-width: 200px;"></a>
 					</div>
 
 					<div class="col-lg-8">
@@ -178,7 +177,7 @@
 
 							<div class="col-6 col-sm-6 col-md-3" style="display: flex; justify-content: flex-end; align-items: center;">
 								<ul class="list-unstyled">
-									<li>Have a complaint? <span style="display: flex; align-items: center;"><img src="images/email.png" alt="Email Icon" style="width: 20px; height: auto; margin-right: 5px;"> moonwd@gmail.com</span></li>
+									<li>Have a complaint? <span style="display: flex; align-items: center;"><img src="{{asset('images/email.png')}}" alt="Email Icon" style="width: 20px; height: auto; margin-right: 5px;"> moonwd@gmail.com</span></li>
 								</ul>
 							</div>
 							

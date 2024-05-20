@@ -162,6 +162,7 @@ a {
   display: block;
   margin-bottom: 20px; }
 .blog-section .post-entry .post-thumbnail img {
+  max-height: 12.2rem;
   border-radius: 20px;
   -webkit-transition: .3s all ease;
   -o-transition: .3s all ease;

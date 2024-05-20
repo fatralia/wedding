@@ -356,3 +356,31 @@ body {
 
 .footer-section .navbar-brand img {
   margin-top: 80px; /* Atur jarak ke bawah sesuai kebutuhan */}
+
+  #dropdown-options {
+    position: absolute;
+    top: 72%; /* Mengatur opsi berada di bawah tombol */
+    left: 87.5%; /* Mengatur opsi berada di tengah tombol */
+    transform: translateX(-50%); /* Mengatur posisi horizontal menjadi di bawah tombol */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    z-index: 1000; /* Mengatur lapisan z-index agar opsi tampil di atas konten lain */
+    display: none; /* Awalnya sembunyikan opsi */
+  }
+  
+  #user-dropdown:hover + #dropdown-options {
+    display: block; /* Tampilkan opsi saat tombol user.svg dihover */
+  }
+  
+  .dropdown-option {
+    display: block;
+    padding: 5px;
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .dropdown-option:hover {
+    background-color: #f0f0f0;
+  }

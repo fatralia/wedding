@@ -42,16 +42,27 @@
 
 					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
                         <li>
-                            <!-- Tombol untuk menampilkan opsi -->
-                            <a href="#" class="btn btn-primary nav-link" type="button" id="user-dropdown" style="padding: 5px; background-color: rgb(97, 150, 166); display: inline-block; width: 50px; text-align: center; border-color:rgb(97, 150, 166)">
+							@if(session()->has('email'))
+							<a href="#" class="btn btn-primary nav-link" type="button" id="user-dropdown" style="padding: 5px; background-color: rgb(97, 150, 166); display: inline-block; text-align: center; border-color:rgb(97, 150, 166)">
                                 <img src="images/user.svg" alt="User Icon" style="max-width: 100%; height: auto;">
-                            </a>
+								{{session('email')}}
+							</a>
                             <!-- Opsi "Profile" dan "Logout" -->
                             <div id="dropdown-options" style="display: none;">
                                 <a href="/profile" class="dropdown-option">Profile</a>
-                                <a href="/" class="dropdown-option">Logout</a>
+                                <a href="/auth/logout" class="dropdown-option">Logout</a>
                             </div>
-                        </li>
+							@else
+							<a href="#" class="btn btn-primary nav-link" type="button" id="user-dropdown" style="padding: 5px; background-color: rgb(97, 150, 166); display: inline-block; text-align: center; border-color:rgb(97, 150, 166)">
+                                <img src="images/user.svg" alt="User Icon" style="max-width: 100%; height: auto;">
+								Login
+							</a>
+                            <!-- Opsi "Profile" dan "Logout" -->
+                            <div id="dropdown-options" style="display: none;">
+                                <a href="/auth/login" class="dropdown-option">Login</a>>
+                            </div>
+							@endif
+						</li>
                     </ul>
                     
                     <script>
@@ -109,96 +120,71 @@
 		<div class="blog-section">
 			<div class="container">
 				<div class="row">
+					@foreach ($data as $item)
 					<div class="col-12 col-sm-6 col-md-4 mb-5">
 						<div class="post-entry">
-							<a href="/detail3" class="post-thumbnail"><img src="images/1.jpg" alt="Image" class="img-fluid"></a>
+							<a href="/package/{{$item->id}}" class="post-thumbnail"><img src="{{asset('uploads/products/'.$item->picture)}}" alt="Image" class="img-fluid"></a>
 							<div class="post-content-entry">
-								<h3><a href="#">Paket Dasar</a></h3>
+								<h3><a href="#">{{$item->name}}</a></h3>
 								<div class="meta">
-									<span>± Rp. 20.000.000 - Rp. 80.000.000</span>
+									<span>{{formatRupiah($item->min)}} - {{formatRupiah($item->max)}}</span>
 								</div>
 							</div>
 						</div>
 					</div>
-
-					<div class="col-12 col-sm-6 col-md-4 mb-5">
-						<div class="post-entry">
-							<a href="#" class="post-thumbnail"><img src="images/2.jpg" alt="Image" class="img-fluid"></a>
-							<div class="post-content-entry">
-								<h3><a href="#">Paket Menengah</a></h3>
-								<div class="meta">
-									<span>± Rp 80.000.000 - Rp 150.000.000</span>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-12 col-sm-6 col-md-4 mb-5">
-						<div class="post-entry">
-							<a href="#" class="post-thumbnail"><img src="images/3.jpg" alt="Image" class="img-fluid"></a>
-							<div class="post-content-entry">
-								<h3><a href="#">Paket Premium</a></h3>
-								<div class="meta">
-									<span>± Rp. 150.000.000 - Rp. 300.000.000</span>
-								</div>
-							</div>
-						</div>
-					</div>
+					@endforeach
 				</div>
 			</div>
 		</div>
-		<!-- End Blog Section -->	
-
-		<!-- Start Footer Section -->
-		<footer class="footer-section" style="padding-bottom: 0.5px;">
-			<div class="border-top copyright">
-			<div class="container relative">
-
-				<div class="row">
-					<div class="col-lg-8">
+			<footer class="footer-section" style="padding-bottom: 0.5px;">
+				<div class="border-top copyright">
+				<div class="container relative">
+	
+					<div class="row">
+						<div class="col-lg-8">
+						</div>
 					</div>
-				</div>
-
-				<div class="row g-5 mb-5">
-					<div class="col-lg-4">
-						<a class="navbar-brand" href="index.html"><img src="logo.png" alt="Logo Wedding" style="height: auto; width: auto; max-height: 100px; max-width: 200px;"></a>
-					</div>
-
-					<div class="col-lg-8">
-						<div class="row links-wrap">
-							<div class="col-6 col-sm-6 col-md-3">
-
-								<ul class="list-unstyled custom-social">
-									<li><a href="#"><span class="fa fa-brands fa-facebook-f"></span></a></li>
-									<li><a href="#"><span class="fa fa-brands fa-twitter"></span></a></li>
-									<li><a href="#"><span class="fa fa-brands fa-instagram"></span></a></li>
-									<li><a href="#"><span class="fa fa-brands fa-linkedin"></span></a></li>
-								</ul>
-							</div>
-
-							<div class="col-6 col-sm-6 col-md-3" style="display: flex; justify-content: flex-end;">
-								<ul class="list-unstyled">
-									<li style="margin-top: 24px;">Available at <span style="display: block; margin-top: 1px;">08.00 AM - 20.00 PM</span></li>
-								</ul>
-							</div>
-							
-							<div class="col-6 col-sm-6 col-md-3" style="display: flex; justify-content: flex-end; align-items: center;">
-								<ul class="list-unstyled">
-									<li>Have a complaint? <span style="display: flex; align-items: center;"><img src="images/email.png" alt="Email Icon" style="width: 20px; height: auto; margin-right: 5px;"> moonwd@gmail.com</span></li>
-								</ul>
-							</div>
-							
-							<div class="col-6 col-sm-6 col-md-3" style="display: flex; justify-content: flex-end;">
-								<ul class="list-unstyled">
-									<li style="margin-top: 18px;"> © 2024 Moon Wedding. <span style="display: block; margin-top: 1px;">All Rights Reserved. </span></li>
-								</ul>
-							</div>
+	
+					<div class="row g-5 mb-5">
+						<div class="col-lg-4">
+							<a class="navbar-brand" href="index.html"><img src="logo.png" alt="Logo Wedding" style="height: auto; width: auto; max-height: 100px; max-width: 200px;"></a>
+						</div>
+	
+						<div class="col-lg-8">
+							<div class="row links-wrap">
+								<div class="col-6 col-sm-6 col-md-3">
+	
+									<ul class="list-unstyled custom-social">
+										<li><a href="#"><span class="fa fa-brands fa-facebook-f"></span></a></li>
+										<li><a href="#"><span class="fa fa-brands fa-twitter"></span></a></li>
+										<li><a href="#"><span class="fa fa-brands fa-instagram"></span></a></li>
+										<li><a href="#"><span class="fa fa-brands fa-linkedin"></span></a></li>
+									</ul>
+								</div>
+	
+								<div class="col-6 col-sm-6 col-md-3" style="display: flex; justify-content: flex-end;">
+									<ul class="list-unstyled">
+										<li style="margin-top: 24px;">Available at <span style="display: block; margin-top: 1px;">08.00 AM - 20.00 PM</span></li>
+									</ul>
+								</div>
+								
+								<div class="col-6 col-sm-6 col-md-3" style="display: flex; justify-content: flex-end; align-items: center;">
+									<ul class="list-unstyled">
+										<li>Have a complaint? <span style="display: flex; align-items: center;"><img src="images/email.png" alt="Email Icon" style="width: 20px; height: auto; margin-right: 5px;"> moonwd@gmail.com</span></li>
+									</ul>
+								</div>
+								
+								<div class="col-6 col-sm-6 col-md-3" style="display: flex; justify-content: flex-end;">
+									<ul class="list-unstyled">
+										<li style="margin-top: 18px;"> © 2024 Moon Wedding. <span style="display: block; margin-top: 1px;">All Rights Reserved. </span></li>
+									</ul>
+								</div>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</footer>
+			</footer>
 		<!-- End Footer Section -->
 
 		<script src="js/bootstrap.bundle.min.js"></script>

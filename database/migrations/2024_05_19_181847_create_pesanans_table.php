@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('admin', function (Blueprint $table) {
-            // $table->varchar('nama');
-            // $table->varchar('nama');
-            // $table->varchar('nama');
-            // $table->integer('nama');
-            // $table->varchar('nama');
-            // $table->varchar('nama');
+        Schema::create('pesanans', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->date('tanggal');
+            $table->unsignedBigInteger('product_id');
+            $table->string('bukti');
+            $table->timestamps();
         });
     }
 
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('admin');
+        Schema::dropIfExists('pesanans');
     }
 };

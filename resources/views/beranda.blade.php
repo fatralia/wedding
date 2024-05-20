@@ -42,16 +42,27 @@
 
 					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
                         <li>
-                            <!-- Tombol untuk menampilkan opsi -->
-                            <a href="#" class="btn btn-primary nav-link" type="button" id="user-dropdown" style="padding: 5px; background-color: rgb(97, 150, 166); display: inline-block; width: 50px; text-align: center; border-color:rgb(97, 150, 166)">
+							@if(session()->has('email'))
+							<a href="#" class="btn btn-primary nav-link" type="button" id="user-dropdown" style="padding: 5px; background-color: rgb(97, 150, 166); display: inline-block; text-align: center; border-color:rgb(97, 150, 166)">
                                 <img src="images/user.svg" alt="User Icon" style="max-width: 100%; height: auto;">
-                            </a>
+								{{session('email')}}
+							</a>
                             <!-- Opsi "Profile" dan "Logout" -->
                             <div id="dropdown-options" style="display: none;">
                                 <a href="/profile" class="dropdown-option">Profile</a>
-                                <a href="/" class="dropdown-option">Logout</a>
+                                <a href="/auth/logout" class="dropdown-option">Logout</a>
                             </div>
-                        </li>
+							@else
+							<a href="#" class="btn btn-primary nav-link" type="button" id="user-dropdown" style="padding: 5px; background-color: rgb(97, 150, 166); display: inline-block; text-align: center; border-color:rgb(97, 150, 166)">
+                                <img src="images/user.svg" alt="User Icon" style="max-width: 100%; height: auto;">
+								Login
+							</a>
+                            <!-- Opsi "Profile" dan "Logout" -->
+                            <div id="dropdown-options" style="display: none;">
+                                <a href="/auth/login" class="dropdown-option">Login</a>>
+                            </div>
+							@endif
+						</li>
                     </ul>
                     
                     <script>

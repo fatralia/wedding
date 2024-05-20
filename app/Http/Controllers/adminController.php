@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\admin;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class adminController extends Controller
@@ -12,7 +12,7 @@ class adminController extends Controller
      */
     public function index()
     {
-        $data = admin::orderBy('id', 'asc')->get();
+        $data = User::orderBy('id', 'asc')->get();
         return view('admin.index')->with('data', $data);
     }
 
@@ -21,8 +21,8 @@ class adminController extends Controller
      */
     public function create()
     {
-        
-        $data = admin::orderBy('id', 'asc')->get();
+
+        $data = User::orderBy('id', 'asc')->get();
         return view('admin.create')->with('data', $data);
     }
 
@@ -32,22 +32,22 @@ class adminController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama'=>'required',
-            'pesanan'=>'required',
-            'email'=>'required',
-            'alamat'=>'required',
-            'no_hp'=>'required',
-            'tanggal'=>'required',
+            'nama' => 'required',
+            // 'pesanan'=>'required',
+            'email' => 'required',
+            'alamat' => 'required',
+            'no_hp' => 'required',
+            // 'tanggal'=>'required',
         ]);
-        $data =[
-            'nama'=>$request->nama,
-            'pesanan' => $request->pesanan,
-            'email'=>$request->email,
-            'alamat'=>$request->alamat,
-            'no_hp'=>$request->no_hp,
-            'tanggal'=>$request->tanggal,
+        $data = [
+            'name' => $request->nama,
+            'password' => $request->pesanan,
+            'email' => $request->email,
+            'alamat' => $request->alamat,
+            'no_hp' => $request->no_hp,
+            'role' => 'admin',
         ];
-        admin::create($data);
+        User::insert($data);
         return redirect()->to('admin_web')->with('success', 'Berhasil menambahkan pesanan');
     }
 
@@ -66,7 +66,6 @@ class adminController extends Controller
     public function edit(string $id)
 
     {
-        
     }
 
     /**
@@ -74,7 +73,7 @@ class adminController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        return admin::where('id', $id)->update([
+        return User::where('id', $id)->update([
             'nama' => $request->nama,
             'pesanan' => $request->pesanan,
             'email' => $request->email,
@@ -82,8 +81,8 @@ class adminController extends Controller
             'no_hp' => $request->no_hp,
             'tanggal' => $request->tanggal,
         ])
-        ? redirect('admin_web/')
-        : redirect()->back();
+            ? redirect('admin_web/')
+            : redirect()->back();
     }
 
     /**
@@ -91,8 +90,8 @@ class adminController extends Controller
      */
     public function destroy(string $id)
     {
-        return admin::where('id', $id)->delete()
-        ? redirect('admin_web/')
-        : redirect()->back();
+        return User::where('id', $id)->delete()
+            ? redirect('admin_web/')
+            : redirect()->back();
     }
 }

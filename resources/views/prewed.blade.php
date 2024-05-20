@@ -42,16 +42,27 @@
 
 					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
                         <li>
-                            <!-- Tombol untuk menampilkan opsi -->
-                            <a href="#" class="btn btn-primary nav-link" type="button" id="user-dropdown" style="padding: 5px; background-color: rgb(97, 150, 166); display: inline-block; width: 50px; text-align: center; border-color:rgb(97, 150, 166)">
+							@if(session()->has('email'))
+							<a href="#" class="btn btn-primary nav-link" type="button" id="user-dropdown" style="padding: 5px; background-color: rgb(97, 150, 166); display: inline-block; text-align: center; border-color:rgb(97, 150, 166)">
                                 <img src="images/user.svg" alt="User Icon" style="max-width: 100%; height: auto;">
-                            </a>
+								{{session('email')}}
+							</a>
                             <!-- Opsi "Profile" dan "Logout" -->
                             <div id="dropdown-options" style="display: none;">
                                 <a href="/profile" class="dropdown-option">Profile</a>
-                                <a href="/" class="dropdown-option">Logout</a>
+                                <a href="/auth/logout" class="dropdown-option">Logout</a>
                             </div>
-                        </li>
+							@else
+							<a href="#" class="btn btn-primary nav-link" type="button" id="user-dropdown" style="padding: 5px; background-color: rgb(97, 150, 166); display: inline-block; text-align: center; border-color:rgb(97, 150, 166)">
+                                <img src="images/user.svg" alt="User Icon" style="max-width: 100%; height: auto;">
+								Login
+							</a>
+                            <!-- Opsi "Profile" dan "Logout" -->
+                            <div id="dropdown-options" style="display: none;">
+                                <a href="/auth/login" class="dropdown-option">Login</a>>
+                            </div>
+							@endif
+						</li>
                     </ul>
                     
                     <script>
@@ -109,149 +120,19 @@
 		<div class="blog-section">
 			<div class="container">
 				<div class="row">
+					@foreach ($data as $item)
 					<div class="col-12 col-sm-6 col-md-4 mb-5">
 						<div class="post-entry">
-							<a href="/detail" class="post-thumbnail"><img src="images/tradisional.jpg" alt="Image" class="img-fluid"></a>
+							<a href="/prewed/{{$item->id}}" class="post-thumbnail"><img src="{{asset('uploads/products/'.$item->picture)}}" alt="Image" class="img-fluid"></a>
 							<div class="post-content-entry">
-								<h3><a href="#">Traditional</a></h3>
+								<h3><a href="#">{{$item->name}}</a></h3>
 								<div class="meta">
-									<span>Rp. 7.000.000 - Rp. 28.000.000</span>
+									<span>{{formatRupiah($item->min)}} - {{formatRupiah($item->max)}}</span>
 								</div>
 							</div>
 						</div>
 					</div>
-
-					<div class="col-12 col-sm-6 col-md-4 mb-5">
-						<div class="post-entry">
-							<a href="#" class="post-thumbnail"><img src="images/vintage.jpg" alt="Image" class="img-fluid"></a>
-							<div class="post-content-entry">
-								<h3><a href="#">Vintage Romance</a></h3>
-								<div class="meta">
-									<span>Rp 7.000.000 - Rp 20.000.000.</span>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-12 col-sm-6 col-md-4 mb-5">
-						<div class="post-entry">
-							<a href="#" class="post-thumbnail"><img src="images/nature.jpg" alt="Image" class="img-fluid"></a>
-							<div class="post-content-entry">
-								<h3><a href="#">Nature Adventure</a></h3>
-								<div class="meta">
-									<span>Rp 9.000.000 - Rp 30.000.000.</span>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-12 col-sm-6 col-md-4 mb-5">
-						<div class="post-entry">
-							<a href="#" class="post-thumbnail"><img src="images/urban.jpg" alt="Image" class="img-fluid"></a>
-							<div class="post-content-entry">
-								<h3><a href="#">Urban Chic</a></h3>
-								<div class="meta">
-									<span>Rp 7.000.000 - Rp 25.000.000.</span>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-12 col-sm-6 col-md-4 mb-5">
-						<div class="post-entry">
-							<a href="#" class="post-thumbnail"><img src="images/rustic.jpg" alt="Image" class="img-fluid"></a>
-							<div class="post-content-entry">
-								<h3><a href="#">Rustic Farmhouse</a></h3>
-								<div class="meta">
-									<span>Rp 8.000.000 - Rp 30.000.000.</span>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-12 col-sm-6 col-md-4 mb-5">
-						<div class="post-entry">
-							<a href="#" class="post-thumbnail"><img src="images/fairy.jpg" alt="Image" class="img-fluid"></a>
-							<div class="post-content-entry">
-								<h3><a href="#">Fairytale Romance</a></h3>
-								<div class="meta">
-									<span>Rp 10.000.000 - Rp 35.000.000.</span>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-12 col-sm-6 col-md-4 mb-5">
-						<div class="post-entry">
-							<a href="#" class="post-thumbnail"><img src="images/bohemian.jpg" alt="Image" class="img-fluid"></a>
-							<div class="post-content-entry">
-								<h3><a href="#">Bohemian Dream</a></h3>
-								<div class="meta">
-									<span>Rp 8.000.000 - Rp 25.000.000.</span>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-12 col-sm-6 col-md-4 mb-5">
-						<div class="post-entry">
-							<a href="#" class="post-thumbnail"><img src="images/elegan.jpg" alt="Image" class="img-fluid"></a>
-							<div class="post-content-entry">
-								<h3><a href="#">Glamorous Elegance</a></h3>
-								<div class="meta">
-									<span>Rp 10.000.000 - Rp 40.000.000.</span>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-12 col-sm-6 col-md-4 mb-5">
-						<div class="post-entry">
-							<a href="#" class="post-thumbnail"><img src="images/travel.jpg" alt="Image" class="img-fluid"></a>
-							<div class="post-content-entry">
-								<h3><a href="#">Travel Love</a></h3>
-								<div class="meta">
-									<span>Rp 15.000.000 - Rp 50.000.000.</span>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-12 col-sm-6 col-md-4 mb-5">
-						<div class="post-entry">
-							<a href="#" class="post-thumbnail"><img src="images/artistic.jpg" alt="Image" class="img-fluid"></a>
-							<div class="post-content-entry">
-								<h3><a href="#">Artistic Expression</a></h3>
-								<div class="meta">
-									<span>Rp 10.000.000 - Rp 35.000.000.</span>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-12 col-sm-6 col-md-4 mb-5">
-						<div class="post-entry">
-							<a href="#" class="post-thumbnail"><img src="images/season.jpg" alt="Image" class="img-fluid"></a>
-							<div class="post-content-entry">
-								<h3><a href="#">Seasonal Delight</a></h3>
-								<div class="meta">
-									<span>Rp 8.000.000 - Rp 25.000.000.</span>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-12 col-sm-6 col-md-4 mb-5">
-						<div class="post-entry">
-							<a href="#" class="post-thumbnail"><img src="images/fantasy.jpg" alt="Image" class="img-fluid"></a>
-							<div class="post-content-entry">
-								<h3><a href="#">Futuristic Fantasy</a></h3>
-								<div class="meta">
-									<span>Rp 12.000.000 - Rp 40.000.000.</span>
-								</div>
-							</div>
-						</div>
-					</div>
+					@endforeach
 				</div>
 			</div>
 		</div>

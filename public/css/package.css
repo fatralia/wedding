@@ -163,6 +163,7 @@ a {
   margin-bottom: 20px; }
 .blog-section .post-entry .post-thumbnail img {
   border-radius: 20px;
+  max-height: 12.2rem;
   -webkit-transition: .3s all ease;
   -o-transition: .3s all ease;
   transition: .3s all ease; }

@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<!-- Bootstrap CSS -->
-		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
-		<link href="css/tiny-slider.css" rel="stylesheet">
-		<link href="css/confirm.css" rel="stylesheet">
+		<link href="{{asset('css/tiny-slider.css')}}" rel="stylesheet">
+		<link href="{{asset('css/confirm.css')}}" rel="stylesheet">
 		<title>Moon Wedding</title>
 		<style>
 			body {
@@ -24,7 +24,7 @@
 		<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Wedding navigation bar">
 
 			<div class="container">
-				<a class="navbar-brand" href="index.html"><img src="logo.png" alt="Logo Wedding"></a>
+				<a class="navbar-brand" href="/beranda"><img src="{{asset('logo.png')}}" alt="Logo Wedding"></a>
 
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsWedding" aria-controls="navbarsWedding" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
@@ -42,16 +42,27 @@
 
 					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
                         <li>
-                            <!-- Tombol untuk menampilkan opsi -->
-                            <a href="#" class="btn btn-primary nav-link" type="button" id="user-dropdown" style="padding: 5px; background-color: rgb(97, 150, 166); display: inline-block; width: 50px; text-align: center; border-color:rgb(97, 150, 166)">
-                                <img src="images/user.svg" alt="User Icon" style="max-width: 100%; height: auto;">
-                            </a>
+							@if(session()->has('email'))
+							<a href="#" class="btn btn-primary nav-link" type="button" id="user-dropdown" style="padding: 5px; background-color: rgb(97, 150, 166); display: inline-block; text-align: center; border-color:rgb(97, 150, 166)">
+                                <img src="{{asset('images/user.svg')}}" alt="User Icon" style="max-width: 100%; height: auto;">
+								{{session('email')}}
+							</a>
                             <!-- Opsi "Profile" dan "Logout" -->
                             <div id="dropdown-options" style="display: none;">
                                 <a href="/profile" class="dropdown-option">Profile</a>
-                                <a href="/" class="dropdown-option">Logout</a>
+                                <a href="/auth/logout" class="dropdown-option">Logout</a>
                             </div>
-                        </li>
+							@else
+							<a href="#" class="btn btn-primary nav-link" type="button" id="user-dropdown" style="padding: 5px; background-color: rgb(97, 150, 166); display: inline-block; text-align: center; border-color:rgb(97, 150, 166)">
+                                <img src="{{asset('images/user.svg')}}" alt="User Icon" style="max-width: 100%; height: auto;">
+								Login
+							</a>
+                            <!-- Opsi "Profile" dan "Logout" -->
+                            <div id="dropdown-options" style="display: none;">
+                                <a href="/auth/login" class="dropdown-option">Login</a>>
+                            </div>
+							@endif
+						</li>
                     </ul>
                     
                     <script>
@@ -82,33 +93,36 @@
         {{-- end nav --}}
 
         <div class="container">
-            <h2>Confirm</h2>
-            <p>No. Rekening Moon Wedding</p>
-            <div class="text-container">
-                <strong>BRI</strong><br>
-                <strong>1468-92-209523-34-9</strong><span class="thin-text">A.n Fatralia Della Ayu Sagitaningrum ( DP = Rp. 500.000,-)</span>
-            </div>
-            <div class="text-container">
-                <strong>MANDIRI</strong><br>
-                <strong>111-67-4178065-1</strong><span class="thin-text">A.n Kevin Gymnastiar Wibawa ( DP = Rp. 500.000,-)</span>
-            </div>
-            <div style="text-align: center;">
-                <label for="fileUpload" class="custom-file-upload" style="margin-top: 80px;">
-                    Upload Bukti
-                </label>
-                <input type="file" id="fileUpload" accept="image/*" style="display: none;" onchange="showFileName(this)">
-                <p id="fileName"></p>
-            </div>
+			<form action="/confirm/{{$data->id}}" method="post" enctype="multipart/form-data">
+				@csrf
+            	<h2>Confirm</h2>
+            	<p>No. Rekening Moon Wedding</p>
+            	<div class="text-container">
+                	<strong>BRI</strong><br>
+                	<strong>1468-92-209523-34-9</strong><span class="thin-text">A.n Fatralia Della Ayu Sagitaningrum ( DP = Rp. 500.000,-)</span>
+            	</div>
+            	<div class="text-container">
+                	<strong>MANDIRI</strong><br>
+                	<strong>111-67-4178065-1</strong><span class="thin-text">A.n Kevin Gymnastiar Wibawa ( DP = Rp. 500.000,-)</span>
+            	</div>
+            	<div style="text-align: center;">
+                	<label for="fileUpload" class="custom-file-upload" style="margin-top: 80px;">
+                    	Upload Bukti
+                	</label>
+                	<input type="file" id="fileUpload" accept="image/*" name="picture" style="display: none;" onchange="showFileName(this)">
+                	<p id="fileName"></p>
+            	</div>
             
-            <script>
-                function showFileName(input) {
-                    const fileName = input.files[0].name;
-                    document.getElementById('fileName').innerText = fileName;
-                }
-            </script>                          
-            <p style="margin-top: 10px; text-align: center; margin-bottom : 50px;">Silahkan Bayar DP pada rekening di atas, kemudian upload bukti pembayaran DP.</p>
-            <button style="margin-top: 10px;">Confirm</button>
-        </div>
+            	<script>
+                	function showFileName(input) {
+                    	const fileName = input.files[0].name;
+                    	document.getElementById('fileName').innerText = fileName;
+                	}
+            	</script>                          
+            	<p style="margin-top: 10px; text-align: center; margin-bottom : 50px;">Silahkan Bayar DP pada rekening di atas, kemudian upload bukti pembayaran DP.</p>
+            	<button type="submit" style="margin-top: 10px;">Confirm</button>
+			</form>	
+		</div>
         
           <!-- Start Footer Section -->
 		<footer class="footer-section" style="padding-bottom: 0.5px;">
@@ -122,7 +136,7 @@
 
 				<div class="row g-5 mb-5">
 					<div class="col-lg-4">
-						<a class="navbar-brand" href="index.html"><img src="logo.png" alt="Logo Wedding" style="height: auto; width: auto; max-height: 100px; max-width: 200px;"></a>
+						<a class="navbar-brand" href="/beranda"><img src="{{asset('logo.png')}}" alt="Logo Wedding" style="height: auto; width: auto; max-height: 100px; max-width: 200px;"></a>
 					</div>
 
 					<div class="col-lg-8">
@@ -146,7 +160,7 @@
 
 							<div class="col-6 col-sm-6 col-md-3" style="display: flex; justify-content: flex-end; align-items: center;">
 								<ul class="list-unstyled">
-									<li>Have a complaint? <span style="display: flex; align-items: center;"><img src="images/email.png" alt="Email Icon" style="width: 20px; height: auto; margin-right: 5px;"> moonwd@gmail.com</span></li>
+									<li>Have a complaint? <span style="display: flex; align-items: center;"><img src="{{asset('images/email.png')}}" alt="Email Icon" style="width: 20px; height: auto; margin-right: 5px;"> moonwd@gmail.com</span></li>
 								</ul>
 							</div>
 							

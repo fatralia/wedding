@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<!-- Bootstrap CSS -->
-		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
-		<link href="css/tiny-slider.css" rel="stylesheet">
-		<link href="css/detail.css" rel="stylesheet">
+		<link href="{{asset('css/tiny-slider.css')}}" rel="stylesheet">
+		<link href="{{asset('css/detail.css')}}" rel="stylesheet">
 		<title>Moon Wedding</title>
 		<style>
 			body {
@@ -23,7 +23,7 @@
 		<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Wedding navigation bar">
 
 			<div class="container">
-				<a class="navbar-brand" href="index.html"><img src="logo.png" alt="Logo Wedding"></a>
+				<a class="navbar-brand" href="index.html"><img src="{{asset('logo.png')}}" alt="Logo Wedding"></a>
 
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsWedding" aria-controls="navbarsWedding" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
@@ -43,7 +43,7 @@
                         <li>
                             <!-- Tombol untuk menampilkan opsi -->
                             <a href="#" class="btn btn-primary nav-link" type="button" id="user-dropdown" style="padding: 5px; background-color: rgb(97, 150, 166); display: inline-block; width: 50px; text-align: center; border-color:rgb(97, 150, 166)">
-                                <img src="images/user.svg" alt="User Icon" style="max-width: 100%; height: auto;">
+                                <img src="{{asset('images/user.svg')}}" alt="User Icon" style="max-width: 100%; height: auto;">
                             </a>
                             <!-- Opsi "Profile" dan "Logout" -->
                             <div id="dropdown-options" style="display: none;">
@@ -83,21 +83,14 @@
         {{-- detail start --}}
         <div class="container" style="margin-top: 60px;">
             <div class="image-container">
-              <img class="slide" src="images/grid1.jpg" alt="Image 1">
+              <img class="slide" src="{{asset('uploads/products/'.$data['picture'])}}" alt="Image 1">
             </div>
             <div class="content"  style="margin-left: 100px;">
-              <div style="margin-bottom: 60px;"><h2>Traditional</h2>
-              <p>Rp. 7.000.000 - Rp. 28.000.000</p></div>
+              <div style="margin-bottom: 60px;"><h2>{{$data->name}}</h2>
+              <p>{{formatRupiah($data->min)}} - {{formatRupiah($data->max)}}</p></div>
               <div style="margin-bottom: 60px;"><p>Detail : <br>
-				- Konsultasi pra-sesi kepada pasangan untuk membahas konsep, lokasi, dan detail lainnya.<br>
-				- Custom Background atau Tempat.<br>
-				- Durasi sesi foto yang moderat, mungkin antara 4-8 jam. <br>
-				- Penggunaan satu atau dua lokasi foto. <br>
-				- Penggunaan pakaian tradisional sesuai dengan tema yang dipilih.<br>
-				- Jumlah foto yang dihasilkan mungkin sekitar 50-100 foto.<br>
-				- Pengeditan dasar foto-foto yang dipilih.<br>
-				- Pilih format foto : cetakan fisik / album digital.<br></p></div>
-              <a href = "/booking"><button>Booking Now</button></a>
+				{{$data->detail}}</p></div>
+              <a href = "/booking/{{$data->id}}"><button>Booking Now</button></a>
             </div>
           </div>
           {{-- detail end --}}
@@ -114,7 +107,7 @@
 
 				<div class="row g-5 mb-5">
 					<div class="col-lg-4">
-						<a class="navbar-brand" href="index.html"><img src="logo.png" alt="Logo Wedding" style="height: auto; width: auto; max-height: 100px; max-width: 200px;"></a>
+						<a class="navbar-brand" href="index.html"><img src="{{asset('logo.png')}}" alt="Logo Wedding" style="height: auto; width: auto; max-height: 100px; max-width: 200px;"></a>
 					</div>
 
 					<div class="col-lg-8">
@@ -138,7 +131,7 @@
 
 							<div class="col-6 col-sm-6 col-md-3" style="display: flex; justify-content: flex-end; align-items: center;">
 								<ul class="list-unstyled">
-									<li>Have a complaint? <span style="display: flex; align-items: center;"><img src="images/email.png" alt="Email Icon" style="width: 20px; height: auto; margin-right: 5px;"> moonwd@gmail.com</span></li>
+									<li>Have a complaint? <span style="display: flex; align-items: center;"><img src="{{asset('images/email.png')}}" alt="Email Icon" style="width: 20px; height: auto; margin-right: 5px;"> moonwd@gmail.com</span></li>
 								</ul>
 							</div>
 							

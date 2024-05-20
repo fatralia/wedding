@@ -71,23 +71,22 @@
 
 </head>
 <body>
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#"><img src="logo.png" alt="Logo" class="navbar-logo"></a>
+    <nav class="navbar navbar-inverse" style="z-index: 1">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#"><img src="logo.png" alt="Logo" class="navbar-logo"></a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="home-nav" style="margin-right: 10rem"><a href="/auth/logout" class="navbar_home">Logout</a></li>
+            </ul>
         </div>
-        <ul class="nav navbar-nav navbar-right">
-            <li class="home-nav"><a href="#" class="navbar_home">Home</a></li>
-        </ul>
+    </nav>
+    
+    <div class="sidebar">
+        <a href="/admin/user" style="margin-top: 4rem">User</a>
+        <a href="/admin/pesanan">Pesanan</a>
+        <a href="/admin/product">Product</a>
     </div>
-</nav>
-
-<div class="sidebar">
-    <a href="/admin_user">User</a>
-    <a href="/admin_web">Pesanan</a>
-    <a href="/admin_product">Product</a>
-    <a href="/admin_tema">Tema</a>
-</div>
 
 <div class="content">
     <div class="container">
@@ -98,7 +97,7 @@
                 </div>
             </div>
         @endif
-        <div class="text-center update-text">PESANAN</div>
+        <div class="update-text">PESANAN</div>
         <!-- Table Content -->
     </div>
 
@@ -118,13 +117,12 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Nama</th>
+                        <th>Name</th>
+                        <th>Produk</th>
                         <th>Alamat</th>
                         <th>No.Hp</th>
                         <th>Tanggal</th>
-                        <th>Produk</th>
                         <th>Bukti</th>
-                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -132,87 +130,13 @@
                     @foreach ($data as $item)
                     <tr>
                         <td>{{ $i++ }}</td>
-                        <td>{{ $item->nama }}</td>
+                        <td>{{ $item->name }}</td>
+                        <td>{{ $item->product }}</td>
                         <td>{{ $item->alamat }}</td>
                         <td>{{ $item->no_hp }}</td>
-                        <td>{{ $item->tanggal }}</td>
-                        <td>{{ $item->produk }}</td>
-                        <td><button class="btn btn-primary">Lihat Bukti</button></td>
-                        <td>
-                            {{-- <a href="#editEmployeeModal{{ $item->id }}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a> --}}
-                            <a href="#deleteEmployeeModal{{ $item->id }}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                        </td>
+                        <td>{{ tanggal2($item->tanggal) }}</td>
+                        <td><a href="{{asset('uploads/pesanans/'.$item->bukti)}}"><button class="btn btn-primary">Lihat Bukti</button></a></td>
                     </tr>
-
-                    <div id="deleteEmployeeModal{{ $item->id }}" class="modal fade">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <form action="admin_web/delete/{{ $item->id }}" method="GET">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Delete Employee</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Are you sure you want to delete these Records?</p>
-                                        <p class="text-warning"><small>This action cannot be undone.</small></p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                        <input type="submit" class="btn btn-danger" value="Delete">
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="editEmployeeModal{{ $item->id }}" class="modal fade">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <form action='admin_web/edit/{{ $item->id }}' method="POST">
-                                    @csrf
-                                    @method('PUT')
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Edit Employee</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <label>Nama</label>
-                                            <input type="text" class="form-control" name="nama" id="nama" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Alamat</label>
-                                            <textarea class="form-control" name="alamat" id="alamat" required></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>No Handphone</label>
-                                            <input type="text" class="form-control" name="no_hp" id="no_hp" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Pilih Tanggal</label>
-                                            <input type="text" class="form-control datepicker" name="tanggal" id="tanggal" required>
-                                        <div class="form-group">
-                                            <label>Produk</label>
-                                            <input type="text" class="form-control" name="produk" id="produk" required>
-                                        </div>
-                                            <script>
-                                                $(document).ready(function() {
-                                                    $('.datepicker').datepicker({
-                                                        format: 'yyyy/mm/dd',
-                                                        autoclose: true
-                                                    });
-                                                });
-                                            </script>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                        <input type="submit" class="btn btn-info" value="Save">
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
                     @endforeach
                 </tbody>
             </table>
@@ -223,6 +147,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <form action='{{ route('admin.create') }}' method="POST">
+                    @csrf
                     <div class="modal-header">
                         <h4 class="modal-title">Add Employee</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -234,7 +159,7 @@
                         </div>
                         <div class="form-group">
                             <label>Pesanan</label>
-                            <input type="text" class="form-control" name="pesanan" required>
+                            <input type="text" class="form-control" name="pesanan" >
                         </div>
                         <div class="form-group">
                             <label>Email</label>
@@ -250,7 +175,7 @@
                         </div>
                         <div class="form-group">
                             <label>Pilih Tanggal</label>
-                            <input type="text" class="form-control datepicker" name="tanggal" required>
+                            <input type="text" class="form-control datepicker" name="tanggal" >
                         </div>
                     </div>
                     <div class="modal-footer">

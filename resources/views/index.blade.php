@@ -42,11 +42,47 @@
 
 					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
 						<li>
-							<a href="/login" class="btn btn-primary nav-link" type="button">
-								<img src="images/user.svg" alt="User Icon"> Login
+							@if(session()->has('email'))
+							<a href="#" class="btn btn-primary nav-link" type="button" id="user-dropdown" style="padding: 5px; background-color: rgb(97, 150, 166); display: inline-block; text-align: center; border-color:rgb(97, 150, 166)">
+                                <img src="images/user.svg" alt="User Icon" style="max-width: 100%; height: auto;">
+								{{session('email')}}
 							</a>
+                            <!-- Opsi "Profile" dan "Logout" -->
+                            <div id="dropdown-options" style="display: none;">
+                                <a href="/profile" class="dropdown-option">Profile</a>
+                                <a href="/auth/logout" class="dropdown-option">Logout</a>
+                            </div>
+							@else
+							<a href="#" class="btn btn-primary nav-link" type="button" id="user-dropdown" style="padding: 5px; background-color: rgb(97, 150, 166); display: inline-block;text-align: center; border-color:rgb(97, 150, 166)">
+                                <img src="images/user.svg" alt="User Icon" style="max-width: 100%; height: auto;">
+								Login
+							</a>
+                            <!-- Opsi "Profile" dan "Logout" -->
+                            <div id="dropdown-options" style="display: none;">
+                                <a href="/auth/login" class="dropdown-option">Login</a>
+                            </div>
+							@endif
 						</li>
 					</ul>
+
+					<script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            var dropdownButton = document.getElementById('user-dropdown');
+                            var dropdownOptions = document.getElementById('dropdown-options');
+                    
+                            // Tambahkan event listener untuk tombol dropdown
+                            dropdownButton.addEventListener('click', function (event) {
+                                event.preventDefault(); // Untuk mencegah navigasi
+                    
+                                // Toggle tampilan opsi
+                                if (dropdownOptions.style.display === 'none') {
+                                    dropdownOptions.style.display = 'block';
+                                } else {
+                                    dropdownOptions.style.display = 'none';
+                                }
+                            });
+                        });
+                    </script>
 				</div>
 			</div>
 				

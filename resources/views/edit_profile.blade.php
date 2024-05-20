@@ -10,11 +10,11 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 		<!-- Bootstrap CSS -->
-		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
-		<link href="css/tiny-slider.css" rel="stylesheet">
-		<link href="css/edit_profile.css" rel="stylesheet">
+		<link href="{{asset('css/tiny-slider.css')}}" rel="stylesheet">
+		<link href="{{asset('css/profile.css')}}" rel="stylesheet">
 		<style>
 			body {
 				font-family: 'Poppins', sans-serif;
@@ -27,7 +27,7 @@
 		<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Wedding navigation bar">
 
 			<div class="container">
-				<a class="navbar-brand" href="index.html"><img src="logo.png" alt="Logo Wedding"></a>
+				<a class="navbar-brand" href="/beranda"><img src="{{asset('logo.png')}}" alt="Logo Wedding"></a>
 
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsWedding" aria-controls="navbarsWedding" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
@@ -45,16 +45,27 @@
 
 					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
                         <li>
-                            <!-- Tombol untuk menampilkan opsi -->
-                            <a href="#" class="btn btn-primary nav-link" type="button" id="user-dropdown" style="padding: 5px; background-color: rgb(97, 150, 166); display: inline-block; width: 50px; text-align: center; border-color:rgb(97, 150, 166)">
-                                <img src="images/user.svg" alt="User Icon" style="max-width: 100%; height: auto;">
-                            </a>
+							@if(session()->has('email'))
+							<a href="#" class="btn btn-primary nav-link" type="button" id="user-dropdown" style="padding: 5px; background-color: rgb(97, 150, 166); display: inline-block; text-align: center; border-color:rgb(97, 150, 166)">
+                                <img src="{{asset('images/user.svg')}}" alt="User Icon" style="max-width: 100%; height: auto;">
+								{{session('email')}}
+							</a>
                             <!-- Opsi "Profile" dan "Logout" -->
                             <div id="dropdown-options" style="display: none;">
                                 <a href="/profile" class="dropdown-option">Profile</a>
-                                <a href="/" class="dropdown-option">Logout</a>
+                                <a href="/auth/logout" class="dropdown-option">Logout</a>
                             </div>
-                        </li>
+							@else
+							<a href="#" class="btn btn-primary nav-link" type="button" id="user-dropdown" style="padding: 5px; background-color: rgb(97, 150, 166); display: inline-block; text-align: center; border-color:rgb(97, 150, 166)">
+                                <img src="{{asset('images/user.svg')}}" alt="User Icon" style="max-width: 100%; height: auto;">
+								Login
+							</a>
+                            <!-- Opsi "Profile" dan "Logout" -->
+                            <div id="dropdown-options" style="display: none;">
+                                <a href="/auth/login" class="dropdown-option">Login</a>>
+                            </div>
+							@endif
+						</li>
                     </ul>
                     
                     <script>
@@ -85,6 +96,17 @@
 
 		<!-- Start Profile Section -->
 		<div class="container">
+			<div class="content">
+				<div class="container">
+					@if (Session::has('gagal'))
+						<div class="pt-3">
+							<div class="alert alert-danger alert-block">
+								{{ Session::get('gagal') }}
+							</div>
+						</div>
+					@endif
+					<!-- Table Content -->
+				</div>
     			<!-- PROFILE Text -->
     			<div class="text-center" style="margin-top: 20px;">
         				<h2>EDIT PROFILE</h2>
@@ -97,60 +119,65 @@
 		<!-- End Profile Section -->
 
 		<div class="container">
-            <div class="profile" style="margin-top: 60px;">
-                <div class="profile-left">
+			<form action="" method="post" enctype="multipart/form-data">
+				@csrf
+				@method('PUT')
+            	<div class="profile" style="margin-top: 60px;">
+				<div class="profile-left">
                     <div class="profile-image">
-                        <img id="user-avatar" src="aku.jpg" alt="User Avatar" class="rounded-circle">
+                        <img id="user-avatar" src="{{asset('uploads/users/'.$data['picture'])}}" alt="User Avatar" class="rounded-circle">
                     </div>
                     <div class="email">
-                        <p>fatraayu17@gmail.com</p>
+                        <p>{{$data['email']}}</p>
                         <div class="button-container">
-                            <input type="file" id="upload-avatar" style="display:none;">
-                            <button id="upload-avatar-btn" class="btn-upload">Upload Gambar</button>
+                            <input type="file" name="picture" id="upload-avatar" style="display:none;">
+                            <button id="upload-avatar-btn" type="button" class="btn-upload">Upload Gambar</button>
                         </div>
                     </div>
                 </div>
                 <div class="profile-right">
                     <div class="form-group" style="margin-top: 15px;">
                         <label for="name" style="width: 150px;">Nama:</label>
-                        <input type="text" id="name" name="name" value="Fatralia Della" style="width: 600px;">
+                        <input type="text" id="name" name="name" value="{{$data['name']}}" style="width: 600px;">
                     </div>
                     <div class="form-group">
                         <label for="email" style="width: 150px;">Email:</label>
-                        <input type="email" id="email" name="email" value="fatraayu17@gmail.com" style="width: 600px;">
+                        <input type="email" id="email" name="email" value="{{$data['email']}}" style="width: 600px;">
                     </div>
                     <div class="form-group">
                         <label for="phone" style="width: 150px;">Nomor HP:</label>
-                        <input type="text" id="phone" name="phone" value="08123456789" style="width: 600px;">
+                        <input type="text" id="phone" name="phone" value="{{$data['no_hp']}}" style="width: 600px;">
                     </div>
                     <div class="form-group">
                         <label for="address" style="width: 150px;">Alamat:</label>
-                        <input type="text" id="address" name="address" value="Jalan Bunga No. 123" style="width: 600px;">
+                        <input type="text" id="address" name="address" value="{{$data['alamat']}}" style="width: 600px;">
                     </div>
                     <div class="buttons">
-                        <a href="/profile"><button id="edit-profile-btn">Cancel</button></a>
-                        <button id="save-profile-btn">Save</button>
+                        <a href="/profile/{{session('id')}}"><button id="edit-profile-btn">Cancel</button></a>
+                        <button id="save-profile-btn" type="submit">Save</button>
                     </div>
-                
-            </div>
+				</div>
+			</form>
         </div>
     
         <script>
             $(document).ready(function(){
+				$('#upload-avatar').change(function() {
+                previewImage(this);
+            });
                 $("#upload-avatar-btn").click(function(){
                     $("#upload-avatar").click();
                 });
-    
-                $("#upload-avatar").change(function(){
-                    var file = this.files[0];
-                    if (file) {
-                        var reader = new FileReader();
-                        reader.onload = function(event) {
-                            $("#user-avatar").attr("src", event.target.result);
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                });
+				function previewImage(input) {
+            		var preview = $('#user-avatar')[0];
+            		if (input.files && input.files[0]) {
+                		var reader = new FileReader();
+                		reader.onload = function (e) {
+                    		preview.src = e.target.result;
+                		}
+                		reader.readAsDataURL(input.files[0]);
+            		}
+        		}
             });
         </script>
 
@@ -166,7 +193,7 @@
 
 				<div class="row g-5 mb-5">
 					<div class="col-lg-4">
-						<a class="navbar-brand" href="index.html"><img src="logo.png" alt="Logo Wedding" style="height: auto; width: auto; max-height: 100px; max-width: 200px;"></a>
+						<a class="navbar-brand" href="/beranda"><img src="{{asset('logo.png')}}" alt="Logo Wedding" style="height: auto; width: auto; max-height: 100px; max-width: 200px;"></a>
 					</div>
 
 					<div class="col-lg-8">
@@ -190,7 +217,7 @@
 
 							<div class="col-6 col-sm-6 col-md-3" style="display: flex; justify-content: flex-end; align-items: center;">
 								<ul class="list-unstyled">
-									<li>Have a complaint? <span style="display: flex; align-items: center;"><img src="images/email.png" alt="Email Icon" style="width: 20px; height: auto; margin-right: 5px;"> moonwd@gmail.com</span></li>
+									<li>Have a complaint? <span style="display: flex; align-items: center;"><img src="{{asset('images/email.png')}}" alt="Email Icon" style="width: 20px; height: auto; margin-right: 5px;"> moonwd@gmail.com</span></li>
 								</ul>
 							</div>
 							
@@ -210,8 +237,8 @@
 		<!-- End Footer Section -->	
 
 
-		<script src="js/bootstrap.bundle.min.js"></script>
-		<script src="js/tiny-slider.js"></script>
-		<script src="js/custom.js"></script>
+		<script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
+		<script src="{{asset('js/tiny-slider.js')}}"></script>
+		<script src="{{asset('js/custom.js')}}"></script>
 	</body>
 </html>
