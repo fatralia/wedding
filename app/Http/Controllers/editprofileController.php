@@ -15,11 +15,11 @@ class editprofileController extends Controller
 
     public function update(Request $request, $id)
     {
-        $data = User::where('id', $id)->first();
+        $data = User::where('email', $request->email)->first();
         if ($data !== null) {
-            if ($data->id === (int) $id) {
+            if ($request->email === $data->email && $data->id === (int) $id) {
                 return $this->saveUpdate($request, $id, $data);
-            } else {
+            } else if ($data->id !== (int) $id) {
                 return redirect()->back()->with('gagal', 'email telah terdaftar');
             }
         } else {
