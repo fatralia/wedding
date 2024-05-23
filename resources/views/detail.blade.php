@@ -98,7 +98,7 @@
             </div>
             <div class="content"  style="margin-left: 100px;">
               <div style="margin-bottom: 60px;"><h2>{{$data->name}}</h2>
-              <p>{{formatRupiah($data->min)}} - {{formatRupiah($data->max)}}</p></div>
+              <p>{{formatRupiah((float)$data->min)}} - {{formatRupiah((float)$data->max)}}</p></div>
               <div style="margin-bottom: 60px;"><p>Detail : <br>
 				{{$data->detail}}</p></div>
               <a href = "/booking/{{$data->id}}"><button>Booking Now</button></a>
