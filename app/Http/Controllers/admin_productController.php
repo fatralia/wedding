@@ -35,7 +35,7 @@ class admin_productController extends Controller
             'max' => $request->max,
             'picture' => $this->storeImage($request->picture)
         ])
-            ? redirect('/admin/product')->with('sukses', 'data produk berhasil ditambahkan')
+            ? redirect('/admin/product')->with('success', 'data produk berhasil ditambahkan')
             : redirect()->back()->with('gagal', 'gagal menambahkan data');
     }
 
@@ -78,7 +78,7 @@ class admin_productController extends Controller
         $data = Product::where('id', $id)->first();
         $this->deleteImage($data['picture']);
         return $data->delete()
-            ? redirect('/admin/product')->with('sukses', 'berhasil menghapus data')
+            ? redirect('/admin/product')->with('success', 'berhasil menghapus data')
             : redirect()->back()->with('gagal', 'gagal menghapus data');
     }
 }

@@ -43,15 +43,26 @@
 
 					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
                         <li>
-                            <!-- Tombol untuk menampilkan opsi -->
-                            <a href="#" class="btn btn-primary nav-link" type="button" id="user-dropdown" style="padding: 5px; background-color: rgb(97, 150, 166); display: inline-block; width: 50px; text-align: center; border-color:rgb(97, 150, 166)">
-                                <img src="images/user.svg" alt="User Icon" style="max-width: 100%; height: auto;">
-                            </a>
+                            @if(session()->has('email'))
+							<a href="#" class="btn btn-primary nav-link" type="button" id="user-dropdown" style="padding: 5px; background-color: rgb(97, 150, 166); display: inline-block; text-align: center; border-color:rgb(97, 150, 166)">
+                                <img src="{{asset('images/user.svg')}}" alt="User Icon" style="max-width: 100%; height: auto;">
+								{{session('email')}}
+							</a>
                             <!-- Opsi "Profile" dan "Logout" -->
                             <div id="dropdown-options" style="display: none;">
                                 <a href="/profile" class="dropdown-option">Profile</a>
-                                <a href="/" class="dropdown-option">Logout</a>
+                                <a href="/auth/logout" class="dropdown-option">Logout</a>
                             </div>
+							@else
+							<a href="#" class="btn btn-primary nav-link" type="button" id="user-dropdown" style="padding: 5px; background-color: rgb(97, 150, 166); display: inline-block; text-align: center; border-color:rgb(97, 150, 166)">
+                                <img src="{{asset('images/user.svg')}}" alt="User Icon" style="max-width: 100%; height: auto;">
+								Login
+							</a>
+                            <!-- Opsi "Profile" dan "Logout" -->
+                            <div id="dropdown-options" style="display: none;">
+                                <a href="/auth/login" class="dropdown-option">Login</a>>
+                            </div>
+							@endif
                         </li>
                     </ul>
                     
@@ -84,79 +95,44 @@
 
         {{-- start comment --}}
         <div class="container">
+            @if (Session::has('gagal'))
+            <div class="pt-3">
+                <div class="alert alert-danger">
+                    {{ Session::get('gagal') }}
+                </div>
+            </div>
+        @endif
             <div class="be-comment-block">
                 <h1 class="comments-title">Comments</h1>
                 <div class="be-comment">
+                    @foreach($data as $items)
                     <div class="be-img-comment">	
                         <a href="blog-detail-2.html">
-                            <img src="images/223140707111074.jpeg" alt="" class="be-ava-comment">
+                            <img src="{{asset('uploads/users/'.$items->picture)}}" alt="" class="be-ava-comment">
                         </a>
                     </div>
                     <div class="be-comment-content">
-                        
                             <span class="be-comment-name">
-                                <a href="blog-detail-2.html" style="text-decoration: none;">fatraayu17@gmail.com</a>
+                                <a href="blog-detail-2.html" style="text-decoration: none;">{{$items->email}}</a>
                                 </span>
                             <span class="be-comment-time">
                             </span>
             
                         <p class="be-comment-text">
-                            Pelayanannya gaada yang judes, semuanya ramah meskipun aku banyak request, good job!!
+                            {{$items->comment}}
                         </p>
                     </div>
+                    @endforeach
                 </div>
-                <div class="be-comment">
-                    <div class="be-img-comment">	
-                        <a href="blog-detail-2.html">
-                            <img src="images/WhatsApp Image 2024-05-13 at 15.51.40.jpeg" alt="" class="be-ava-comment">
-                        </a>
-                    </div>
-                    <div class="be-comment-content">
-                        <span class="be-comment-name">
-                            <a href="blog-detail-2.html" style="text-decoration: none;">kevingw@gmail.com</a>
-                        </span>
-                        <span class="be-comment-time">
-                        </span>
-                        <p class="be-comment-text">
-                            Mau banget langganan disini lagi kalo sodara/ponakan ada yang nikah, se bagus ituuu.
-                        </p>
-                    </div>
-                </div>
-                <div class="be-comment">
-                    <div class="be-img-comment">	
-                        <a href="blog-detail-2.html" style="text-decoration: none;">
-                            <img src="images/cewe.jpg" alt="" class="be-ava-comment">
-                        </a>
-                    </div>
-                    <div class="be-comment-content">
-                        <span class="be-comment-name">
-                            <a href="blog-detail-2.html" style="text-decoration: none;">cicpi45@gmail.com</a>
-                        </span>
-                        <span class="be-comment-time">
-                        </span>
-                        <p class="be-comment-text">
-                            Ngga nyesel sama sekali pake jasa Moon Wedding pilih yang paket, malah diluar ekspektasi akuuu! kalian jgn ragu deh pesen jasa disini.
-                        </p>
-                    </div>
-                </div>
-                <form class="form-block">
+                <form class="form-block" action="" method="post">
+                    @csrf
                     <div class="row">
-                        <div class="col-xs-12 col-sm-6">
-                            <div class="form-group fl_icon">
-                                <input class="form-input" type="text" placeholder="Nama">
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6 fl_icon">
-                            <div class="form-group fl_icon">
-                                <input class="form-input" type="text" placeholder="Email">
-                            </div>
-                        </div>
                         <div class="col-xs-12">									
                             <div class="form-group">
-                                <textarea class="form-input" required="" placeholder="Komentar"></textarea>
+                                <textarea class="form-input" required name="comment" placeholder="Komentar"></textarea>
                             </div>
                         </div>
-                        <a class="btn btn-success pull-right">submit</a>
+                        <button class="btn btn-success pull-right" type="submit">submit</button>
                     </div>
                 </form>
             </div>

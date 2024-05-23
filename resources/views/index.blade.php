@@ -33,11 +33,11 @@
 				<div class="collapse navbar-collapse" id="navbarsWedding">
 					<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
 						<li class="nav-item active">
-							<a class="nav-link" href="/login">Home</a>
+							<a class="nav-link" href="/beranda">Home</a>
 						</li>
-						<li><a class="nav-link" href="/login">About</a></li>
-						<li><a class="nav-link" href="/login">Comment</a></li>
-						<li><a class="nav-link" href="/login">Contact</a></li>
+						<li><a class="nav-link" href="/about">About</a></li>
+						<li><a class="nav-link" href="/comment">Comment</a></li>
+						<li><a class="nav-link" href="/contact">Contact</a></li>
 					</ul>
 
 					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">

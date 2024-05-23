@@ -86,6 +86,7 @@
         <a href="/admin/user" style="margin-top: 4rem">User</a>
         <a href="/admin/pesanan">Pesanan</a>
         <a href="/admin/product">Product</a>
+        <a href="/admin/comment">Comment</a>
     </div>
 
 <div class="content">

@@ -86,6 +86,7 @@
     <a href="/admin/user" style="margin-top: 4rem">User</a>
     <a href="/admin/pesanan">Pesanan</a>
     <a href="/admin/product">Product</a>
+    <a href="/admin/comment">Comment</a>
 </div>
 
 <div class="content">
@@ -130,7 +131,7 @@
                         <td>{{ $i++ }}</td>
                         <td>{{ $item->name }}</td>
                         <td>{{ $item->category == '1' ? 'Pre Wedding' : ($item->category == '2' ? 'Wedding Decoration' : 'Wedding Package') }}</td>
-                        <td>{{ $item->min }} - {{ $item->max }}</td>
+                        <td>{{formatRupiah((float)$item->min)}} - {{formatRupiah((float)$item->max)}}</td>
                         <td>
                             <a href="#editEmployeeModal{{ $item->id }}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                             <a href="#deleteEmployeeModal{{ $item->id }}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>

@@ -98,7 +98,7 @@
                 </div>
             </div>
         @endif
-        <div class="update-text">PESANAN</div>
+        <div class="update-text">User</div>
         <!-- Table Content -->
     </div>
 
@@ -107,7 +107,7 @@
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h2>List <b>Pesanan</b></h2>
+                        <h2>List <b>User</b></h2>
                     </div>
                     <div class="col-sm-6">
                         {{-- <a href='#addEmployeeModal' class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Tambah Pesanan</span></a> --}}
@@ -118,12 +118,9 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Name</th>
-                        <th>Produk</th>
-                        <th>Alamat</th>
-                        <th>No.Hp</th>
-                        <th>Tanggal</th>
-                        <th>Bukti</th>
+                        <th>Nama</th>
+                        <th>Email</th>
+                        <th>Comment</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -132,18 +129,10 @@
                     <tr>
                         <td>{{ $i++ }}</td>
                         <td>{{ $item->name }}</td>
-                        <td>{{ $item->product }}</td>
-                        <td>{{ $item->alamat }}</td>
-                        <td>{{ $item->no_hp }}</td>
-                        <td>{{ tanggal2($item->tanggal) }}</td>
-                        <td>
-                            @if($item->bukti)
-                            <a href="{{asset('uploads/pesanans/'.$item->bukti)}}"><button class="btn btn-primary">Lihat Bukti</button></a>
-                            @else
-                            <button disabled class="btn btn-primary">Lihat Bukti</button>
-                            @endif
-                        </td>
+                        <td>{{ $item->email }}</td>
+                        <td>{{ $item->comment }}</td>
                     </tr>
+
                     @endforeach
                 </tbody>
             </table>
@@ -154,7 +143,6 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <form action='{{ route('admin.create') }}' method="POST">
-                    @csrf
                     <div class="modal-header">
                         <h4 class="modal-title">Add Employee</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -166,7 +154,7 @@
                         </div>
                         <div class="form-group">
                             <label>Pesanan</label>
-                            <input type="text" class="form-control" name="pesanan" >
+                            <input type="text" class="form-control" name="pesanan" required>
                         </div>
                         <div class="form-group">
                             <label>Email</label>
@@ -182,7 +170,7 @@
                         </div>
                         <div class="form-group">
                             <label>Pilih Tanggal</label>
-                            <input type="text" class="form-control datepicker" name="tanggal" >
+                            <input type="text" class="form-control datepicker" name="tanggal" required>
                         </div>
                     </div>
                     <div class="modal-footer">

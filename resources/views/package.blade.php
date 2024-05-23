@@ -127,7 +127,7 @@
 							<div class="post-content-entry">
 								<h3><a href="#">{{$item->name}}</a></h3>
 								<div class="meta">
-									<span>{{formatRupiah($item->min)}} - {{formatRupiah($item->max)}}</span>
+									<span>{{formatRupiah((float)$item->min)}} - {{formatRupiah((float)$item->max)}}</span>
 								</div>
 							</div>
 						</div>

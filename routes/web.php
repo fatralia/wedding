@@ -75,6 +75,9 @@ Route::prefix('/admin')->group(function () {
     Route::prefix('/pesanan')->group(function () {
         Route::get('/', [PesananController::class, 'index'])->middleware('admin');
     });
+    Route::prefix('/comment')->group(function () {
+        Route::get('/', [commentController::class, 'admin'])->middleware('admin');
+    });
 });
 
 Route::prefix('/profile')->group(function () {
@@ -110,13 +113,21 @@ Route::prefix('/confirm')->group(function () {
     Route::get('/{id}', [confirmController::class, 'index'])->middleware('myAuth');
     Route::post('/{id}', [confirmController::class, 'store'])->middleware('myAuth');
 });
+
+
+// Route::get('/comment', [commentController::class, 'index'])->middleware('myAuth');
+
+
+Route::prefix('/comment')->group(function () {
+    Route::get('/', [commentController::class, 'index'])->middleware('myAuth');
+    Route::post('/', [commentController::class, 'store'])->middleware('myAuth');
+});
 Route::resource('admin_web', adminController::class);
 Route::resource('admin/create', adminController::class);
 Route::resource('admin_web/edit', adminController::class);
 Route::post('admin_web/', [adminController::class, 'store'])->name('admin.create');
 Route::put('admin_web/edit/{id}', [adminController::class, 'update']);
 Route::get('admin_web/delete/{id}', [adminController::class, 'destroy']);
-Route::get('/detail', [detailController::class, 'index']);
 Route::get('/detail2', [detail2Controller::class, 'index']);
 Route::get('/booking2', [booking2Controller::class, 'index']);
 Route::get('/package', [packageController::class, 'index']);
@@ -126,7 +137,6 @@ Route::get('/admin', [admin2Controller::class, 'index']);
 Route::get('/admin_update', [admin_updateController::class, 'index']);
 Route::get('/admin_prewed', [admin_prewedController::class, 'index']);
 Route::get('/about', [aboutController::class, 'index']);
-Route::get('/comment', [commentController::class, 'index']);
 Route::get('/contact', [contactController::class, 'index']);
 Route::get('/contact', [contactController::class, 'index']);
 Route::get('/admin_user', [admin_userController::class, 'index']);
