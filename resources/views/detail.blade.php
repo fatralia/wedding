@@ -97,10 +97,11 @@
               <img class="slide" src="{{asset('uploads/products/'.$data['picture'])}}" alt="Image 1">
             </div>
             <div class="content"  style="margin-left: 100px;">
-              <div style="margin-bottom: 60px;"><h2>{{$data->name}}</h2>
+              <div style=""><h2>{{$data->name}}</h2>
               <p>{{formatRupiah((float)$data->min)}} - {{formatRupiah((float)$data->max)}}</p></div>
-              <div style="margin-bottom: 60px;"><p>Detail : <br>
-				{{$data->detail}}</p></div>
+              <div style="margin-bottom: 60px;">
+				Detail : 
+				<p style="white-space: pre-wrap;">{{$data->detail}}</p></div>
               <a href = "/booking/{{$data->id}}"><button>Booking Now</button></a>
             </div>
           </div>
